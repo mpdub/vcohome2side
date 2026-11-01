@@ -28,7 +28,7 @@
   const update = () => {
     if (wide.matches) {
       const x = strip.scrollLeft / strip.clientWidth, i = Math.round(x);
-      if (b) b.style.opacity = 1 - 0.7 * Math.min(1, x);
+      if (b) { b.style.opacity = 1 - 0.7 * Math.min(1, x); b.style.setProperty('--bp', Math.min(3, x) * 0.6); }
       if (i === shown || !slides[i]) return;
       shown = i;
       const s = slides[i];
@@ -39,7 +39,7 @@
       html.classList.toggle('on-dark', s.classList.contains('dark'));
       history.replaceState(null, '', i && s.id ? '#' + s.id : location.pathname + location.search);
     } else {
-      if (b) b.style.opacity = 1 - 0.7 * Math.min(1, scrollY / innerHeight);
+      if (b) { const p = scrollY / innerHeight; b.style.opacity = 1 - 0.7 * Math.min(1, p); b.style.setProperty('--bp', Math.min(1.5, p)); }
       html.classList.remove('on-dark'); shown = -1;
     }
   };
