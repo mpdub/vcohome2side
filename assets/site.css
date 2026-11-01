@@ -247,9 +247,10 @@ font:400 3.5rem/1 var(--serif);text-decoration:none;color:inherit}
   .deck .segs i{width:1.125rem;height:2px;background:currentColor;opacity:.3;transition:opacity .25s}
   .deck .segs i.on{opacity:1}
   .deck .sep{width:1px;align-self:stretch;background:var(--rule);margin:.625rem 0}
-  .deck .links{display:flex;gap:1.75rem;padding:0 1.5rem 0 1.75rem}
-  .deck .links a{font:400 .75rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;white-space:nowrap;padding-bottom:.1875rem;border-bottom:1px solid transparent}
-  .deck .links a:hover,.deck .links a[aria-current]{border-bottom-color:currentColor}
+  .deck .links{display:flex;gap:.375rem;padding:0 .625rem 0 .875rem}
+  .deck .links a{font:400 .75rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;white-space:nowrap;padding:.625rem .75rem;transition:background .15s}
+  .deck .links a:hover{background:#2a2a27}
+  .deck .links a[aria-current]{background:var(--yellow);color:var(--ink)}
   .deck .cta{margin-left:.5rem;display:inline-flex;align-items:center;gap:.625rem;height:2.75rem;padding:0 1.125rem;background:var(--cream);color:var(--ink);
     font:400 .75rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;white-space:nowrap}
   .note{position:fixed;right:1rem;bottom:.625rem;z-index:20;padding:0}

@@ -15,6 +15,7 @@
 
   // slides
   const deck = d.querySelector('.deck');
+  if (deck.querySelector('.links a[aria-current]')) d.body.dataset.fixedNav = '1';
   const num = deck.querySelector('.count b'), name = deck.querySelector('.count span');
   const segs = [...deck.querySelectorAll('.segs i')], prev = deck.querySelector('.prev'), next = deck.querySelector('.next');
   const pad = n => String(n).padStart(2, '0');
@@ -37,6 +38,7 @@
       segs.forEach((g, k) => g.classList.toggle('on', k === i));
       prev.disabled = i === 0; next.disabled = i === slides.length - 1;
       html.classList.toggle('on-dark', s.classList.contains('dark'));
+      if (!d.body.dataset.fixedNav) deck.querySelectorAll('.links a').forEach(a => a.toggleAttribute('aria-current', a.textContent === s.dataset.nav));
       history.replaceState(null, '', i && s.id ? '#' + s.id : location.pathname + location.search);
     } else {
       if (b) { const p = scrollY / innerHeight; b.style.opacity = 1 - 0.7 * Math.min(1, p); b.style.setProperty('--bp', Math.min(1.5, p)); }
