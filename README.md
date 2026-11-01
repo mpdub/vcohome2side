@@ -1,7 +1,5 @@
-# VCO website prototype
+# vcohome2side (archived)
 
-A private preview of the VCO Registered Valuers website, the sideways version: on desktop each page is a row of full-screen slides, moved through with the menu, the arrow buttons, a mouse wheel, the arrow keys or a swipe; phones and short windows get a normal vertical page.
+The sideways-scrolling VCO prototype, archived on 1 November 2026 in favour of the vertical site, [vcohome2](https://github.com/mpdub/vcohome2).
 
-This site is encrypted and opens with a password. Pages and images are encrypted in the browser with AES-256-GCM; the key comes from the password (PBKDF2-SHA256). The editable source is kept privately and rebuilt from there.
-
-Static HTML and CSS, self-hosted fonts, one bloom image per page, a few lines of JavaScript. No frameworks or build step on the page.
+The last working version is kept at the tag `sideways-archive`. This branch now only redirects visitors to the current site.
