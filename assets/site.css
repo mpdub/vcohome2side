@@ -227,7 +227,8 @@ font:400 3.5rem/1 var(--serif);text-decoration:none;color:inherit}
   body{height:100%;overflow:hidden}
   .site-header{position:fixed;left:0;right:0;top:0;transition:color .25s}
   .on-dark .site-header{color:var(--cream)}
-  .site-header .nav{display:none}
+  .site-header .nav>a:not(.btn){display:none}
+  .on-dark .site-header .nav .btn{background:var(--cream);color:var(--ink);border-color:var(--cream)}
   .strip{position:fixed;inset:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior:contain;margin:0}
   .strip::-webkit-scrollbar{display:none}
   .slide{flex:0 0 100vw;width:100vw;height:100vh;box-sizing:border-box;padding:6.875rem 0 5.625rem;display:flex;align-items:center;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden}
@@ -246,7 +247,7 @@ font:400 3.5rem/1 var(--serif);text-decoration:none;color:inherit}
   .deck .segs i{width:1.125rem;height:2px;background:currentColor;opacity:.3;transition:opacity .25s}
   .deck .segs i.on{opacity:1}
   .deck .sep{width:1px;align-self:stretch;background:var(--rule);margin:.625rem 0}
-  .deck .links{display:flex;gap:1.75rem;padding:0 1.75rem}
+  .deck .links{display:flex;gap:1.75rem;padding:0 1.5rem 0 1.75rem}
   .deck .links a{font:400 .75rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;white-space:nowrap;padding-bottom:.1875rem;border-bottom:1px solid transparent}
   .deck .links a:hover,.deck .links a[aria-current]{border-bottom-color:currentColor}
   .deck .cta{margin-left:.5rem;display:inline-flex;align-items:center;gap:.625rem;height:2.75rem;padding:0 1.125rem;background:var(--cream);color:var(--ink);
