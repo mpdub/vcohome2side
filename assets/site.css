@@ -15,6 +15,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
 .skip{position:absolute;left:-9999px;top:0}
 .skip:focus{left:1rem;top:1rem;z-index:100;background:var(--ink);color:var(--cream);padding:.5rem 1rem}
+[hidden]{display:none!important}
 .vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .label{font:400 .75rem/1.4 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grey)}
 .dark .label,.on-ink .label{color:var(--sub)}
@@ -144,6 +145,35 @@ font:400 3.5rem/1 var(--serif);text-decoration:none;color:inherit}
 .menu .contact{position:relative;margin:3.5rem var(--gut) 3rem;font:400 .75rem/1.9 var(--mono);color:var(--sub)}
 .menu .mbloom{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
 
+/* request form and confirmation (both sites); selected choices and ready buttons in yellow */
+.reqgrid{display:grid;grid-template-columns:1fr 35rem;gap:6rem;align-items:start;padding:0 var(--gut)}
+.reqgrid h1,.reqgrid .title{font-size:4.5rem;line-height:.98;letter-spacing:-.02em}
+.statement.big{font-size:3.25rem;line-height:1.12;max-width:20ch}
+.reqgrid .form-grid{margin-top:2.5rem;gap:1.5rem}
+.reqgrid .go{margin-top:2.25rem}
+.summary{border-bottom:1px solid var(--ink);margin-top:1.125rem}
+.summary div{display:grid;grid-template-columns:7.5rem 1fr;gap:1.25rem;padding:.875rem 0;border-top:1px solid var(--ink)}
+.summary dt{font:400 .6875rem/1.4 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grey);padding-top:.1875rem}
+.summary dd{margin:0}
+.chip input:checked+span{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
+.btn.ready,.btn.ghost.ready,.btn.ghost.ready:hover{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
+.reqone{padding:0 var(--gut)}
+.reqone h1{font-size:4.5rem;line-height:.98;letter-spacing:-.02em}
+.reqone .cols{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:2.25rem}
+.reqone .form-grid{gap:1.25rem;align-content:start}
+.reqone .sub{grid-column:1/-1;font:400 .75rem/1.4 var(--mono);letter-spacing:.18em;text-transform:uppercase;padding-bottom:.625rem;border-bottom:1px solid var(--ink)}
+.reqone .chip span{padding:.625rem .875rem;font-size:.875rem}
+.reqone .field textarea{height:6.5rem}
+.reqone .send{margin-top:2rem}
+.ref{font:400 .75rem/1 var(--mono);color:var(--grey);margin-top:1.125rem}
+.wrong{font-size:.875rem;color:var(--grey);margin-top:1.375rem}
+.summary div{padding:.6875rem 0}
+.reqgrid aside .steps .step{padding:1rem 0 1.125rem}
+.reqgrid aside .step h3{font-size:1.5rem}
+.reqgrid aside .step p{font-size:.875rem;margin-top:.375rem}
+@media (max-width:999px){.reqgrid{grid-template-columns:1fr;gap:3rem}.reqone .cols{grid-template-columns:1fr;gap:2.5rem}}
+@media (max-width:699px){.reqgrid h1,.reqgrid .title,.reqone h1{font-size:3rem}}
+
 .note{position:relative;padding:0 var(--gut) 1rem;font:400 .625rem/1.4 var(--mono);color:var(--grey);text-align:right}
 
 @media (max-width:899px){
@@ -201,33 +231,8 @@ font:400 3.5rem/1 var(--serif);text-decoration:none;color:inherit}
 .others .rows{margin-top:1rem}
 .hero .lede{max-width:30ch}
 .contact-foot{display:flex;justify-content:space-between;align-items:center;gap:2rem;margin-top:2.5rem;font:400 .75rem/1.4 var(--mono);color:var(--sub)}
-.reqgrid{display:grid;grid-template-columns:1fr 35rem;gap:6rem;align-items:start;padding:0 var(--gut)}
-.reqgrid h1,.reqgrid .title{font-size:4.5rem;line-height:.98;letter-spacing:-.02em}
-.statement.big{font-size:3.25rem;line-height:1.12;max-width:20ch}
-.reqgrid .form-grid{margin-top:2.5rem;gap:1.5rem}
-.reqgrid .go{margin-top:2.25rem}
-.summary{border-bottom:1px solid var(--ink);margin-top:1.125rem}
-.summary div{display:grid;grid-template-columns:7.5rem 1fr;gap:1.25rem;padding:.875rem 0;border-top:1px solid var(--ink)}
-.summary dt{font:400 .6875rem/1.4 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grey);padding-top:.1875rem}
-.summary dd{margin:0}
 .deck{display:none}
 /* the sideways site's selected choices and ready buttons in yellow */
-.s .chip input:checked+span{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
-.btn.ready,.btn.ghost.ready,.btn.ghost.ready:hover{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
-.reqone{padding:0 var(--gut)}
-.reqone h1{font-size:4.5rem;line-height:.98;letter-spacing:-.02em}
-.reqone .cols{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:2.25rem}
-.reqone .form-grid{gap:1.25rem;align-content:start}
-.reqone .sub{grid-column:1/-1;font:400 .75rem/1.4 var(--mono);letter-spacing:.18em;text-transform:uppercase;padding-bottom:.625rem;border-bottom:1px solid var(--ink)}
-.reqone .chip span{padding:.625rem .875rem;font-size:.875rem}
-.reqone .field textarea{height:6.5rem}
-.reqone .send{margin-top:2rem}
-.ref{font:400 .75rem/1 var(--mono);color:var(--grey);margin-top:1.125rem}
-.wrong{font-size:.875rem;color:var(--grey);margin-top:1.375rem}
-.summary div{padding:.6875rem 0}
-.reqgrid aside .steps .step{padding:1rem 0 1.125rem}
-.reqgrid aside .step h3{font-size:1.5rem}
-.reqgrid aside .step p{font-size:.875rem;margin-top:.375rem}
 
 @media (min-width:1000px) and (min-height:720px){
   html{font-size:clamp(12px,min(1.1111vw,1.7778vh),20px);height:100%;overflow:hidden}
@@ -262,8 +267,6 @@ font:400 3.5rem/1 var(--serif);text-decoration:none;color:inherit}
   .site-footer{display:none}
 }
 @media (max-width:999px),(max-height:719px){
-  .reqgrid{grid-template-columns:1fr;gap:3rem}
-  .reqone .cols{grid-template-columns:1fr;gap:2.5rem}
   .s .intro{grid-template-columns:1fr;gap:2.5rem}
   .slide .portrait{height:auto;aspect-ratio:5/6}
 }
@@ -275,7 +278,6 @@ font:400 3.5rem/1 var(--serif);text-decoration:none;color:inherit}
   .s .fact dd{font-size:1.0625rem}
   .slide .biglink{font-size:2.25rem}
   .slide .manifesto p{font-size:1.625rem}
-  .reqgrid h1,.reqgrid .title,.reqone h1{font-size:3rem}
   .statement.big{font-size:1.75rem}
   .contact-foot{flex-direction:column;align-items:flex-start}
 }
