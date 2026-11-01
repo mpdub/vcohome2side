@@ -14,31 +14,35 @@
   }
 
   // slides
-  const deck = d.querySelector('.deck');
-  if (deck.querySelector('.links a[aria-current]')) d.body.dataset.fixedNav = '1';
-  const num = deck.querySelector('.count b'), name = deck.querySelector('.count span');
+  // the bar: the white block (arrows, name, count, tabs) sits in place of the current section's link
+  const deck = d.querySelector('.deck'), block = deck.querySelector('.cur'), links = [...deck.querySelectorAll('a[data-sec]')];
+  const num = deck.querySelector('.count'), name = deck.querySelector('.nm span');
   const segs = [...deck.querySelectorAll('.segs i')], prev = deck.querySelector('.prev'), next = deck.querySelector('.next');
+  const place = sec => { const a = links.find(l => l.dataset.sec === sec) || links[0]; deck.insertBefore(block, a); links.forEach(l => { l.hidden = l === a; }); };
+  const live = () => slides.filter(s => !s.hidden);
   const pad = n => String(n).padStart(2, '0');
   const cur = () => Math.round(strip.scrollLeft / strip.clientWidth);
   const go = i => {
-    i = Math.max(0, Math.min(slides.length - 1, i));
-    if (wide.matches) strip.scrollTo({ left: i * strip.clientWidth, behavior: reduce.matches ? 'auto' : 'smooth' });
-    else slides[i].scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth' });
+    const L = live(); i = Math.max(0, Math.min(L.length - 1, i));
+    const target = L[i]; i = slides.indexOf(target);
+    if (wide.matches) strip.scrollTo({ left: L.indexOf(target) * strip.clientWidth, behavior: reduce.matches ? 'auto' : 'smooth' });
+    else target.scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth' });
   };
   let shown = -1;
   const update = () => {
     if (wide.matches) {
       const x = strip.scrollLeft / strip.clientWidth, i = Math.round(x);
       if (b) { b.style.opacity = 1 - 0.7 * Math.min(1, x); b.style.setProperty('--bp', Math.min(3, x) * 0.6); }
-      if (i === shown || !slides[i]) return;
+      const L = live(); if (i === shown || !L[i]) return;
       shown = i;
-      const s = slides[i];
+      const s = L[i];
       num.textContent = pad(i + 1) + ' / ' + pad(slides.length);
       name.textContent = s.dataset.name;
       segs.forEach((g, k) => g.classList.toggle('on', k === i));
-      prev.disabled = i === 0; next.disabled = i === slides.length - 1;
+      prev.disabled = i === 0; next.disabled = i >= L.length - 1;
       html.classList.toggle('on-dark', s.classList.contains('dark'));
-      if (!d.body.dataset.fixedNav) deck.querySelectorAll('.links a').forEach(a => a.toggleAttribute('aria-current', a.textContent === s.dataset.nav));
+      html.classList.toggle('on-home', s.id === 'home');
+      place(s.dataset.nav || deck.dataset.sec);
       history.replaceState(null, '', i && s.id ? '#' + s.id : location.pathname + location.search);
     } else {
       if (b) { const p = scrollY / innerHeight; b.style.opacity = 1 - 0.7 * Math.min(1, p); b.style.setProperty('--bp', Math.min(1.5, p)); }
@@ -74,7 +78,7 @@
     if (k === 'ArrowRight' || k === 'PageDown' || (k === ' ' && !e.shiftKey)) i = cur() + 1;
     else if (k === 'ArrowLeft' || k === 'PageUp' || (k === ' ' && e.shiftKey)) i = cur() - 1;
     else if (k === 'Home') i = 0;
-    else if (k === 'End') i = slides.length - 1;
+    else if (k === 'End') i = live().length - 1;
     if (i !== null) { e.preventDefault(); go(i); }
   });
 
@@ -82,28 +86,34 @@
   d.addEventListener('click', e => {
     const a = e.target.closest('a[href*="#"]'); if (!a) return;
     const u = new URL(a.href, location.href); if (u.pathname !== location.pathname) return;
-    const i = slides.indexOf(d.getElementById(u.hash.slice(1))); if (i < 0) return;
+    const i = live().indexOf(d.getElementById(u.hash.slice(1))); if (i < 0) return;
     e.preventDefault(); if (menu && !menu.hidden) setMenu(false); go(i);
   });
   d.querySelectorAll('[data-go]').forEach(btn => btn.addEventListener('click', () => go(+btn.dataset.go)));
 
   // open on the slide named in the address
   if (location.hash) {
-    const i = slides.indexOf(d.getElementById(location.hash.slice(1)));
-    if (i > 0) { if (wide.matches) strip.scrollLeft = i * strip.clientWidth; else slides[i].scrollIntoView(); }
+    const L = live(), i = L.indexOf(d.getElementById(location.hash.slice(1)));
+    if (i > 0) { if (wide.matches) strip.scrollLeft = i * strip.clientWidth; else L[i].scrollIntoView(); }
   }
   wide.addEventListener('change', () => { shown = -1; update(); });
   update();
 
-  // request form: summary on step 2 (prototype: nothing is sent)
+  // request form: one page; Send turns yellow once every field is filled; the confirmation opens after Send (prototype: nothing is sent)
   const form = d.querySelector('form.req');
   if (form) {
-    const sum = () => form.querySelectorAll('[data-sum]').forEach(dd => {
-      const k = dd.dataset.sum, el = form.elements[k];
-      const v = el && (el.value || (el instanceof RadioNodeList ? el.value : ''));
-      dd.textContent = v || '–';
+    const need = ['address', 'lender', 'type', 'name', 'phone', 'email'];
+    const val = k => { const el = form.elements[k]; return el ? String(el.value || '').trim() : ''; };
+    const send = form.querySelector('.send');
+    const check = () => { const ok = need.every(val); send.classList.toggle('ready', ok); return ok; };
+    form.addEventListener('input', check); form.addEventListener('change', check); check();
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!check()) { const k = need.find(k => !val(k)); const el = form.elements[k]; if (el && el.focus) el.focus(); return; }
+      form.querySelectorAll('[data-sum]').forEach(dd => { dd.textContent = val(dd.dataset.sum) || '–'; });
+      const ref = form.querySelector('[data-ref]'); if (ref) ref.textContent = 'VCO-' + String(Date.now()).slice(-6);
+      const sent = d.getElementById('sent'); sent.hidden = false; shown = -1;
+      requestAnimationFrame(() => go(1));
     });
-    form.addEventListener('input', sum); form.addEventListener('change', sum); sum();
-    form.addEventListener('submit', e => { e.preventDefault(); form.querySelector('.sent').hidden = false; form.querySelector('[type=submit]').disabled = true; });
   }
 })();
